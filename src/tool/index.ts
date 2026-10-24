@@ -3,6 +3,8 @@ import { FileOutput } from 'lucide-react';
 import type { BatchTool } from '../kit/types';
 import { parseOfd } from './ofd';
 import { ofdToPdf } from './pdf';
+import { Empty } from './Empty';
+import { ResultBody } from './Result';
 
 const tool: BatchTool = {
   id: 'o11',
@@ -14,6 +16,8 @@ const tool: BatchTool = {
   mode: 'batch',
   resultView: 'list',
   concurrency: 1,
+  Empty,
+  ResultBody,
   accept: { label: 'OFD 文件', extensions: ['ofd'] },
   params: [{ key: 'out', label: '保存到', type: 'folder', default: '' }],
 

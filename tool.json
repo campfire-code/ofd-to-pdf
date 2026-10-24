@@ -2,12 +2,13 @@
   "id": "o11",
   "slug": "ofd-to-pdf",
   "name": "OFD 转 PDF",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "repo": "campfire-code/ofd-to-pdf",
   "license": "MIT",
   "ui": {
-    "layout": "b",
-    "palette": "blue"
+    "layout": "f",
+    "palette": "blue",
+    "accent": "#2A52C0"
   },
   "upstream": null
 }

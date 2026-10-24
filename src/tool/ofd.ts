@@ -191,7 +191,7 @@ async function readObjects(ctx: Ctx, nodes: XNode[], base: Matrix, out: Item[]) 
     if (tag === 'Layer' || tag === 'PageBlock') { await readObjects(ctx, kids(n), base, out); continue; }
     if (!['TextObject', 'PathObject', 'ImageObject', 'CompositeObject'].includes(tag)) continue;
     if (attr(n, 'Visible') === 'false') continue;
-    if (tag === 'CompositeObject') { ctx.warnings.add('复合对象（Composite）未绘制'); continue; }
+    if (tag === 'CompositeObject') { ctx.warnings.add('复合对象未绘制'); continue; }
     const b = nums(attr(n, 'Boundary'));
     const ctmNums = nums(attr(n, 'CTM'));
     const ctm: Matrix | undefined = ctmNums.length === 6 ? (ctmNums as Matrix) : undefined;
@@ -248,10 +248,10 @@ export async function parseOfd(bytes: Uint8Array): Promise<OfdDoc> {
     throw new Error('这不是有效的 OFD 文件（OFD 是一种压缩包），文件可能已损坏');
   }
   const ofdXml = zip.file('OFD.xml');
-  if (!ofdXml) throw new Error('这不是有效的 OFD 文件：找不到 OFD.xml');
+  if (!ofdXml) throw new Error('这不是有效的 OFD 文件：找不到 OFD.xml（入口文件）');
   const docBody = child(root(parse(await ofdXml.async('string'))), 'DocBody');
   const docRootLoc = docBody ? textOf(child(docBody, 'DocRoot') ?? {}).trim() : '';
-  if (!docRootLoc) throw new Error('OFD.xml 里没有 DocRoot，文件可能已损坏');
+  if (!docRootLoc) throw new Error('OFD.xml 里没有 DocRoot（正文入口），文件可能已损坏');
   const docPath = normPath(docRootLoc);
   const docDir = docPath.split('/').slice(0, -1).join('/');
   const doc = root(parse(await (await readFile(zip, docPath, 'Document.xml')).async('string')));
@@ -291,6 +291,6 @@ export async function parseOfd(bytes: Uint8Array): Promise<OfdDoc> {
   }
   // 电子签章 / 印章 / 注释：这个版本不绘制
   if (zip.file(/(^|\/)Signs?\/|Signatures\.xml$/i).length) ctx.warnings.add('含电子签章，PDF 中不含印章、不能验签');
-  if (zip.file(/(^|\/)Annots?\//i).length) ctx.warnings.add('文件含注释（Annotation），未绘制');
+  if (zip.file(/(^|\/)Annots?\//i).length) ctx.warnings.add('文件含注释，未绘制');
   return { pages, warnings: [...ctx.warnings] };
 }

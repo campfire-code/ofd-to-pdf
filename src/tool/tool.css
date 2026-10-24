@@ -1,0 +1,52 @@
+/* OFD 转 PDF：布局 f（顶部标签 + 卡片网格）。只用 kit.css 的变量，类名以 of- 开头。
+   焦点：每个文件转出的页数大字、PDF 页面叠放示意，以及没转出来内容的橙色提醒。 */
+
+/* ---- 空状态 ---- */
+.of-empty { display: flex; flex-direction: column; align-items: center; gap: 12px; padding: 8px 12px; text-align: center; }
+.of-empty > svg { width: 100%; max-width: 440px; height: auto; }
+.of-page { fill: var(--surface); stroke: var(--line-strong); stroke-width: 1.4; }
+.of-page.hot { stroke: var(--primary); }
+.of-ink { fill: var(--ink); opacity: .7; }
+.of-ln { fill: var(--line-strong); opacity: .8; }
+.of-box { fill: none; stroke: var(--line-strong); stroke-width: 1.2; }
+.of-rule { stroke: var(--line-strong); stroke-width: 1; }
+.of-qr { fill: var(--ink); opacity: .75; }
+.of-seal { fill: none; stroke: var(--err); stroke-width: 2.4; opacity: .85; }
+.of-sealno { font-size: 10px; fill: var(--muted); font-family: var(--font); }
+.of-badge { fill: var(--chip); }
+.of-badge.hot { fill: var(--primary-soft); stroke: var(--primary); stroke-width: 1; }
+.of-badget { font-size: 9.5px; font-weight: 800; fill: var(--ink); font-family: var(--font); }
+.of-badget.hot { fill: var(--ink); }
+.of-arrow { fill: none; stroke: var(--primary); stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; }
+.of-cap { font-size: 11px; fill: var(--muted); font-family: var(--font); }
+.of-can { display: grid; grid-template-columns: auto auto; gap: 10px 28px; text-align: left; padding: 10px 18px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); }
+.of-can ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; align-content: start; }
+.of-can li { display: flex; align-items: center; gap: 6px; }
+.of-can .yes svg { color: var(--ok); flex: none; }
+.of-can .no svg { color: var(--err); flex: none; }
+.of-title { font-size: 1.3em; font-weight: 700; color: var(--ink); }
+.of-act { display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; border-radius: 999px; background: var(--primary-soft); color: var(--ink); font-weight: 600; }
+.of-act svg { color: var(--primary); flex: none; }
+@media (max-width: 640px) { .of-can { grid-template-columns: 1fr; } }
+
+/* ---- 结果卡片 ---- */
+.f-grid-wrap .k-cards { grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 14px; }
+.f-grid-wrap .k-card-body { padding: 16px 16px 8px; }
+.f-grid-wrap .k-card-meta { padding: 8px 16px 12px; border-top: 1px solid var(--line); display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px 10px; }
+.f-grid-wrap .k-card-meta > .k-ellipsis { flex: 1 1 100%; font-weight: 600; }
+.of-body { display: grid; gap: 10px; }
+.of-top { display: flex; align-items: center; gap: 16px; }
+.of-stack { position: relative; width: 58px; height: 72px; flex: none; }
+.of-stack i { position: absolute; inset: 0; border-radius: 4px; background: var(--surface); border: 1.5px solid var(--line-strong); transform: translate(calc(var(--i) * 6px), calc(var(--i) * -5px)); }
+.of-stack i:last-of-type { border-color: var(--primary); background: var(--primary-soft); transform: translate(calc(var(--i) * 6px), calc(var(--i) * -5px)); }
+.of-stack span { position: absolute; left: 0; bottom: 8px; width: 100%; text-align: center; font-size: 12px; font-weight: 800; color: var(--ink); z-index: 1; }
+.of-stack { margin-right: 10px; }
+.of-big { display: flex; align-items: baseline; gap: 6px; }
+.of-big b { font-size: 3.4em; line-height: 1; font-weight: 800; color: var(--primary); letter-spacing: -.02em; }
+.of-big span { font-size: 1.1em; font-weight: 600; color: var(--ink); }
+.of-out { color: var(--muted); }
+.of-warn { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.of-warn li { display: flex; gap: 6px; align-items: flex-start; padding: 6px 10px; border-radius: var(--radius); background: var(--warn-soft); color: var(--warn); line-height: 1.4; }
+.of-warn svg { flex: none; margin-top: 2px; }
+.of-ok { display: flex; align-items: center; gap: 6px; color: var(--ok); }
+.of-sub { color: var(--muted); }
